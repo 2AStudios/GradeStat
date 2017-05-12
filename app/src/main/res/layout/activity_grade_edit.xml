@@ -4,7 +4,6 @@
     android:id="@+id/activity_grade_edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -14,5 +13,33 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ListView_editGrade" />
+        android:id="@+id/ListView_editGrade"
+        android:layout_marginBottom="0dp"
+        android:layout_weight=".1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".9">
+
+        <Button
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/button_editCourses"
+            android:layout_weight=".3"
+            android:backgroundTint="?attr/colorPrimaryDark"
+            android:textColor="@android:color/background_light" />
+
+        <Button
+            android:text="ADD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/button3"
+            android:layout_weight=".9"
+            android:backgroundTint="?android:attr/colorAccent"
+            android:textColor="@android:color/background_light" />
+    </LinearLayout>
+
 </LinearLayout>

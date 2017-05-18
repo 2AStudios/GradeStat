@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +18,9 @@ import com.jjoe64.graphview.series.DataPoint;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class overviewFragment extends Fragment {
+public class detailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -32,17 +30,17 @@ public class overviewFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     ArrayList<String> courseList, gradeList, weightingList;
-    TextView dataLeft, dataRight, weightedGPA, unweightedGPA;
+    TextView detailsText;
 
     private OnFragmentInteractionListener mListener;
 
-    public overviewFragment() {
+    public detailsFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static overviewFragment newInstance(ArrayList<String> cList, ArrayList<String> gList, ArrayList<String> wList) {
-        overviewFragment fragment = new overviewFragment();
+    public static detailsFragment newInstance(ArrayList<String> cList, ArrayList<String> gList, ArrayList<String> wList) {
+        detailsFragment fragment = new detailsFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(COURSELIST, cList);
         args.putStringArrayList(GRADELIST, gList);
@@ -52,8 +50,8 @@ public class overviewFragment extends Fragment {
         return fragment;
     }
 
-    public static overviewFragment newInstance(int sectionNumber, ArrayList<String> cList, ArrayList<String> gList, ArrayList<String> wList) {
-        overviewFragment fragment = new overviewFragment();
+    public static detailsFragment newInstance(int sectionNumber, ArrayList<String> cList, ArrayList<String> gList, ArrayList<String> wList) {
+        detailsFragment fragment = new detailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         args.putStringArrayList(COURSELIST, cList);
@@ -115,61 +113,31 @@ public class overviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_overview, container, false);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
         // Inflate the layout for this fragment
-        dataLeft = (TextView)view.findViewById(R.id.textView_dataSetLeft);
-        dataRight = (TextView)view.findViewById(R.id.textView_dataSetRight);
-        weightedGPA = (TextView)view.findViewById(R.id.textView_weightedGPA);
-        unweightedGPA = (TextView)view.findViewById(R.id.textView_unweightedGPA);
-        GraphView graph = (GraphView) view.findViewById(R.id.graph);
-        /*List<DataPoint> graphdata = new ArrayList<DataPoint>();
-        for(int i=0;i<gradeList.size();i++){
-            graphdata.add(new DataPoint(i,Double.parseDouble(gradeList.get(i))));
-        }*/
-        int size = gradeList.size();
-        DataPoint[] values = new DataPoint[size];
-        for (int i=0; i<size; i++) {
-            Double yi = Double.parseDouble(gradeList.get(i));
-            DataPoint v = new DataPoint(i, yi);
-            values[i] = v;
-        }
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(values);
-        graph.addSeries(series);
-
-// styling
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-            }
-        });
-
-        series.setSpacing(50);
-
-// draw values on top
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.RED);
-
-        for(int i=0;i<courseList.size();i++){
-            if(i%2==0){
-                dataLeft.setText(dataLeft.getText()+courseList.get(i)+": " + gradeList.get(i) + "\n");
-            }else{
-                dataRight.setText(dataRight.getText()+courseList.get(i)+": " + gradeList.get(i) + "\n");
-            }
-        }
-
+        detailsText = (TextView)view.findViewById(R.id.textView_detailsText);
         double wGPA = 0.0;
         double uwGPA = 0.0;
+        double totalwGPA = 0.0;
+        double totaluwGPA = 0.0;
         for(int i=0;i<gradeList.size();i++){
             uwGPA += gpaValue(gradeList.get(i));
             wGPA += gpaValue(gradeList.get(i)) + (Double.parseDouble(weightingList.get(i))-4.0);
         }
+        totalwGPA = wGPA;
+        totaluwGPA = uwGPA;
         uwGPA = uwGPA/gradeList.size();
         wGPA = wGPA/gradeList.size();
 
         DecimalFormat df2 = new DecimalFormat("##.##");
-        weightedGPA.setText("Weighted GPA: " +df2.format(wGPA));
-        unweightedGPA.setText("Unweighted GPA: " + df2.format(uwGPA));
+        detailsText.setText("Weighted GPA: " +df2.format(wGPA) +"\n");
+        detailsText.setText(detailsText.getText() + "Unweighted GPA: " + df2.format(uwGPA)+"\n\n");
+
+        for(int i=0;i<courseList.size();i++){
+            detailsText.setText(detailsText.getText()+courseList.get(i)+": " + gradeList.get(i) + "%\n"
+            + "  Percentage of Unweighted GPA: " + df2.format((gpaValue(gradeList.get(i))/totaluwGPA)*100) +"%\n"
+            + "  Percentage of Weighted GPA: " + df2.format((((gpaValue(gradeList.get(i))+ (Double.parseDouble(weightingList.get(i))-4.0))/totalwGPA)*100.0)) +"%\n");
+        }
 
         TextView textView = (TextView) view.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));

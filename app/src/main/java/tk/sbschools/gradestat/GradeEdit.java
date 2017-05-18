@@ -1,4 +1,4 @@
-package tk.sbschools.gradestat;
+/*package tk.sbschools.gradestat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,17 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GradeEdit extends AppCompatActivity {
     ListView display;
+    Button saveBtn;
     ArrayList<String> courseList;
     ArrayList<Double> gradeList, weightingList;
 
@@ -40,10 +46,33 @@ public class GradeEdit extends AppCompatActivity {
         courseList.add("Biology");gradeList.add(100.2);weightingList.add(new Double("5"));
 
         display = (ListView)findViewById(R.id.ListView_editGrade);
+        saveBtn = (Button)findViewById(R.id.button_editCourses);
 
-        CustomAdapter courseListEdit = new CustomAdapter(this,R.layout.grade_edit_list,courseList,gradeList,weightingList);
+        final CustomAdapter courseListEdit = new CustomAdapter(this,R.layout.grade_edit_list,courseList,gradeList,weightingList);
 
         display.setAdapter(courseListEdit);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*for(int i=0;i<display((ArrayAdapter) display.getAdapter()).getItem()
+                try {
+                    JSONObject savedData = new JSONObject();
+                    savedData.put("data",data);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    OutputStreamWriter writer = new OutputStreamWriter(openFileOutput(file, Context.MODE_WORLD_WRITEABLE));
+                    writer.write(savedData.toString());
+                    writer.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 
@@ -103,3 +132,4 @@ public class GradeEdit extends AppCompatActivity {
         }
     }
 }
+*/

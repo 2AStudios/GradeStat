@@ -36,32 +36,30 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:text="Class 1: \nClass 2:"
                 android:id="@+id/textView_dataSetLeft"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/graph"
+                android:layout_width="160dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="16dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                android:textSize="16sp" />
-
-            <TextView
-                android:text="Class 4: \nClass 5:"
-                android:layout_width="160dp"
-                android:id="@+id/textView_dataSetRight"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/graph"
-                android:layout_marginStart="32dp"
-                app:layout_constraintLeft_toRightOf="@+id/textView_dataSetLeft"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_height="100dp"
-                app:layout_constraintHorizontal_bias="0.6"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textSize="16sp"
-                android:fontFamily="sans-serif" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+            <TextView
+                android:id="@+id/textView_dataSetRight"
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.6"
+                app:layout_constraintLeft_toRightOf="@+id/textView_dataSetLeft"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/graph" />
 
             <TextView
                 android:text="Weighted GPA: 4.5"

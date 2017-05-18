@@ -152,9 +152,9 @@ public class overviewFragment extends Fragment {
 
         for(int i=0;i<courseList.size();i++){
             if(i%2==0){
-                dataLeft.setText(dataLeft.getText()+courseList.get(i)+": " + gradeList.get(i) + "\n");
+                dataLeft.setText(dataLeft.getText()+courseList.get(i)+": " + gradeList.get(i) + "%\n");
             }else{
-                dataRight.setText(dataRight.getText()+courseList.get(i)+": " + gradeList.get(i) + "\n");
+                dataRight.setText(dataRight.getText()+courseList.get(i)+": " + gradeList.get(i) + "%\n");
             }
         }
 

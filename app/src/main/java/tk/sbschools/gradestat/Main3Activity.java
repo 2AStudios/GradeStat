@@ -210,6 +210,9 @@ public class Main3Activity extends AppCompatActivity {
             if(position==1){
                 return detailsFragment.newInstance(position + 1,courseList,gradeList,weightingList);
             }
+            if(position==2){
+                return analysisFragment.newInstance(position + 1,courseList,gradeList,weightingList);
+            }
             return overviewFragment.newInstance(position + 1,courseList,gradeList,weightingList);
         }
 

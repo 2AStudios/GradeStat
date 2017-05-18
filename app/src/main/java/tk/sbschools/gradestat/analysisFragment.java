@@ -127,12 +127,32 @@ public class analysisFragment extends Fragment {
         detailsText.setText("Weighted GPA: " +df2.format(wGPA) +"\n");
         detailsText.setText(detailsText.getText() + "Unweighted GPA: " + df2.format(uwGPA)+"\n\n");
 
+        int positionLowest = 0; int positionHighest = 0;
+        double valueLowest = 100.0; double valueHighest = 0.0;
         for(int i=0;i<courseList.size();i++){
-            detailsText.setText(detailsText.getText()+courseList.get(i)+": " + gradeList.get(i) + "%\n"
-            + "  Percentage of Unweighted GPA: " + df2.format((gpaValue(gradeList.get(i))/totaluwGPA)*100) +"%\n"
-            + "  Percentage of Weighted GPA: " + df2.format((((gpaValue(gradeList.get(i))+ (Double.parseDouble(weightingList.get(i))-4.0))/totalwGPA)*100.0)) +"%\n");
+            if(valueLowest>((gpaValue(gradeList.get(i))/totaluwGPA)*100)){
+                valueLowest = ((gpaValue(gradeList.get(i))/totaluwGPA)*100);
+                positionLowest = i;
+            }
+            if(valueHighest<((gpaValue(gradeList.get(i))/totaluwGPA)*100)){
+                valueHighest = ((gpaValue(gradeList.get(i))/totaluwGPA)*100);
+                positionHighest = i;
+            }
         }
-
+        detailsText.setText(detailsText.getText()+ "Raise this grade for maximum effect on your Unweighted GPA: \n " + courseList.get(positionLowest)+": " + gradeList.get(positionLowest) + "%\n\n");
+        detailsText.setText(detailsText.getText()+ "Maintain this grade for maximum effect on your Unweighted GPA: \n " + courseList.get(positionHighest)+": " + gradeList.get(positionHighest) + "%\n\n");
+        for(int i=0;i<courseList.size();i++){
+            if(valueLowest>(((gpaValue(gradeList.get(i))+ (Double.parseDouble(weightingList.get(i))-4.0))/totalwGPA)*100.0)){
+                valueLowest = (((gpaValue(gradeList.get(i))+ (Double.parseDouble(weightingList.get(i))-4.0))/totalwGPA)*100.0);
+                positionLowest = i;
+            }
+            if(valueHighest<(((gpaValue(gradeList.get(i))+ (Double.parseDouble(weightingList.get(i))-4.0))/totalwGPA)*100.0)){
+                valueHighest = (((gpaValue(gradeList.get(i))+ (Double.parseDouble(weightingList.get(i))-4.0))/totalwGPA)*100.0);
+                positionHighest = i;
+            }
+        }
+        detailsText.setText(detailsText.getText()+ "Raise this grade for maximum effect on your Weighted GPA: \n " + courseList.get(positionLowest)+": " + gradeList.get(positionLowest) + "%\n\n");
+        detailsText.setText(detailsText.getText()+ "Maintain this grade for maximum effect on your Weighted GPA: \n " + courseList.get(positionHighest)+": " + gradeList.get(positionHighest) + "%\n\n");
         TextView textView = (TextView) view.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         return view;
